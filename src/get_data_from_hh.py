@@ -29,3 +29,19 @@ def get_company_data(company: dict) -> dict:
     responce = requests.get(company['items'][0]['url'])
     company_data = responce.json()
     return company_data
+
+
+def format_salary_data(vacancy: dict) -> dict:
+    """
+    Возвращает отформатированные данные о зарплате
+    """
+    if vacancy['salary'] == None:
+        vacancy['salary'] = {
+            'from': 0,
+            'to': 0
+        }
+    elif vacancy['salary']['from'] == None:
+        vacancy['salary']['from'] = vacancy['salary']['to']
+    elif vacancy['salary']['to'] == None:
+        vacancy['salary']['to'] = vacancy['salary']['from']
+    return vacancy
