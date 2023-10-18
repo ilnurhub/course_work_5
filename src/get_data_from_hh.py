@@ -13,10 +13,19 @@ def get_company(keyword: str) -> dict:
     return company
 
 
-def get_vacancies_from_company(company: str) -> list:
+def get_vacancies_from_company(company: dict) -> list:
     """
     Возвращает список вакансий компании
     """
     responce = requests.get(company['items'][0]['vacancies_url'])
     vacancies = responce.json()['items']
     return vacancies
+
+
+def get_company_data(company: dict) -> dict:
+    """
+    Возвращает данные о работодателе
+    """
+    responce = requests.get(company['items'][0]['url'])
+    company_data = responce.json()
+    return company_data
