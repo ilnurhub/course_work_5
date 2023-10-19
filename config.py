@@ -1,7 +1,10 @@
 from configparser import ConfigParser
+from os import path
+
+ROOT_PATH = path.dirname(path.abspath(__file__))
 
 
-def config(filename="database.ini", section="postgresql") -> dict:
+def config(filename=path.join(ROOT_PATH, "database.ini"), section="postgresql") -> dict:
     """
     Производит парсинг данных из файла database.ini
     """
