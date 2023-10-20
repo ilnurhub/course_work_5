@@ -20,10 +20,10 @@ def create_database(database_name: str, params: dict):
             CREATE TABLE companies (
                 company_id SERIAL PRIMARY KEY,
                 title VARCHAR(255) NOT NULL,
+                fields_of_activity TEXT,
                 site_url TEXT,
                 hh_url TEXT,
-                logo_url TEXT,
-                fields_of_activity TEXT
+                logo_url TEXT
             )
         """)
 
@@ -44,5 +44,35 @@ def create_database(database_name: str, params: dict):
             )
         """)
 
+    conn.commit()
+    conn.close()
+
+
+def save_data_to_database(company_data: dict, vacancies: list, database_name: str, params: dict):
+    """Сохранение данных о компаниях и вакансиях в базу данных."""
+
+    conn = psycopg2.connect(dbname=database_name, **params)
+
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            INSERT INTO companies (title, site_url, hh_url, logo_url, fields_of_activity)
+            VALUES (%s, %s, %s, %s, %s)
+            RETURNING company_id
+            """,
+            (company_data['name'], company_data['site_url'], company_data['alternate_url'],
+             company_data['logo_urls']['original'], '. '.join(x['name'] for x in company_data['industries']))
+        )
+        company_id = cur.fetchone()[0]
+        for vacancy in vacancies:
+            cur.execute(
+                """INSERT INTO vacancies (company_id, title, publish_date, min_salary, max_salary, requirement, 
+                experience, shedule, employment, vacancy_url) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """,
+                (company_id, vacancy['name'], vacancy['published_at'], vacancy['salary']['from'],
+                 vacancy['salary']['to'], vacancy['snippet']['requirement'], vacancy['experience']['name'],
+                 vacancy['schedule']['name'], vacancy['employment']['name'], vacancy['alternate_url'])
+            )
     conn.commit()
     conn.close()
