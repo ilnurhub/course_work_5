@@ -27,8 +27,9 @@ class DBManager:
                 """
             )
             rows = cur.fetchall()
+            print('Cписок всех компаний и количество вакансий у каждой компании.')
             for row in rows:
-                print(row)
+                print(f"\nКомпания: {row[0]} \nКоличество вакансий: {row[1]}")
         conn.close()
 
     def get_all_vacancies(self):
