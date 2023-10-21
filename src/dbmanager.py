@@ -29,7 +29,7 @@ class DBManager:
             rows = cur.fetchall()
             print('Cписок всех компаний и количество вакансий у каждой компании.')
             for row in rows:
-                print(f"\nКомпания: {row[0]} \nКоличество вакансий: {row[1]}")
+                print(f"Компания: {row[0]} \nКоличество вакансий: {row[1]}\n")
         conn.close()
 
     def get_all_vacancies(self):
@@ -41,15 +41,18 @@ class DBManager:
         with conn.cursor() as cur:
             cur.execute(
                 """
-                SELECT companies.title, vacancies.title, (min_salary + max_salary) / 2, vacancy_url 
+                SELECT companies.title, vacancies.title, min_salary, max_salary, vacancy_url 
                 FROM companies
                 INNER JOIN vacancies 
                 USING(company_id)
                 """
             )
             rows = cur.fetchall()
+            print('Список всех вакансий')
             for row in rows:
-                print(row)
+                print(
+                    f"Компания: {row[0]} \nВакансия: {row[1]} \nЗарплата от: {row[2]} \nЗарплата до: {row[3]} "
+                    f"\nСсылка на вакансию: {row[4]}\n")
         conn.close()
 
     def get_avg_salary(self):
