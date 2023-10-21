@@ -50,3 +50,19 @@ class DBManager:
             for row in rows:
                 print(row)
         conn.close()
+
+    def get_avg_salary(self):
+        """
+        Получает среднюю зарплату по вакансиям.
+        """
+        conn = psycopg2.connect(dbname=self.database_name, **self.params)
+
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT AVG((min_salary + max_salary) / 2) FROM vacancies
+                """
+            )
+            average_salary = cur.fetchone()
+            print(f"Средняя зарплата по всем вакансиям: {int(average_salary[0])} руб")
+        conn.close()
