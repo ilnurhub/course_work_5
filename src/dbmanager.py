@@ -68,5 +68,30 @@ class DBManager:
                 """
             )
             average_salary = cur.fetchone()
-            print(f"Средняя зарплата по всем вакансиям: {int(average_salary[0])} руб")
+            print(f"Средняя зарплата по всем вакансиям: {int(average_salary[0])} руб\n")
         conn.close()
+
+    def get_vacancies_with_higher_salary(self):
+        """
+        Получает список всех вакансий, у которых зарплата выше средней по всем вакансиям.
+        """
+        conn = psycopg2.connect(dbname=self.database_name, **self.params)
+
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT companies.title, vacancies.title, (min_salary + max_salary) / 2, vacancy_url 
+                FROM companies
+                INNER JOIN vacancies 
+                USING(company_id)
+                WHERE (min_salary + max_salary) / 2 > (SELECT AVG((min_salary + max_salary) / 2) FROM vacancies)
+                """
+            )
+            rows = cur.fetchall()
+            print('Список всех вакансий, у которых зарплата выше средней по всем вакансиям.')
+            for row in rows:
+                print(
+                    f"Компания: {row[0]} \nВакансия: {row[1]} \nСредняя зарплата: {row[2]} "
+                    f"\nСсылка на вакансию: {row[3]}\n")
+        conn.close()
+
