@@ -30,3 +30,23 @@ class DBManager:
             for row in rows:
                 print(row)
         conn.close()
+
+    def get_all_vacancies(self):
+        """
+        Получает список всех вакансий с указанием названия компании, названия вакансии и зарплаты и ссылки на вакансию.
+        """
+        conn = psycopg2.connect(dbname=self.database_name, **self.params)
+
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT companies.title, vacancies.title, (min_salary + max_salary) / 2, vacancy_url 
+                FROM companies
+                INNER JOIN vacancies 
+                USING(company_id)
+                """
+            )
+            rows = cur.fetchall()
+            for row in rows:
+                print(row)
+        conn.close()
