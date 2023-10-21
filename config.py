@@ -21,5 +21,5 @@ def config(filename=path.join(ROOT_PATH, "database.ini"), section="postgresql") 
     return db
 
 
-COMPANIES = ['ООО Томору', 'Skyeng', 'ООО Аптрейд', 'ООО Фабрика Решений', 'Hexlet', 'ООО АЙТИ.СПЕЙС', 'Газпромбанк',
+COMPANIES = ['ООО Томору', 'Skyeng', 'amoCRM', '«РОСБАНК»', 'Hexlet', 'ООО АЙТИ.СПЕЙС', 'Газпромбанк',
              'Bell Integrator', 'ООО Кью Лаб', 'Сбер. IT']  # список из 10 компаний
