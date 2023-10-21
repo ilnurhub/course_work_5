@@ -20,7 +20,7 @@ class DBManager:
         with conn.cursor() as cur:
             cur.execute(
                 """
-                SELECT companies.title AS company_name, COUNT(*) AS count_of_vacancies FROM companies
+                SELECT companies.title, COUNT(*) FROM companies
                 INNER JOIN vacancies 
                 USING(company_id) 
                 GROUP BY companies.title
