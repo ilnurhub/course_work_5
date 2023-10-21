@@ -1,8 +1,12 @@
 import psycopg2
+from config import config
 
 
 class DBManager:
     """
     Для работы с данными в БД.
     """
-    pass
+
+    def __init__(self):
+        self.database_name = 'hh_vacancies'
+        self.params = config()
