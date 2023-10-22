@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+from config import config, DATABASE_NAME
 
 
 class DBManager:
@@ -8,7 +8,7 @@ class DBManager:
     """
 
     def __init__(self):
-        self.database_name = 'hh_vacancies'
+        self.database_name = DATABASE_NAME
         self.params = config()
 
     def get_companies_and_vacancies_count(self):
