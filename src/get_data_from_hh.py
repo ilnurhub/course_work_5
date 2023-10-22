@@ -17,7 +17,10 @@ def get_vacancies_from_company(company: dict) -> list:
     """
     Возвращает список вакансий компании
     """
-    responce = requests.get(company['items'][0]['vacancies_url'])
+    params = {
+        'per_page': 100
+    }
+    responce = requests.get(company['items'][0]['vacancies_url'], params=params)
     vacancies = responce.json()['items']
     return vacancies
 
