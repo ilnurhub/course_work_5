@@ -38,13 +38,13 @@ def format_salary_data(vacancy: dict) -> dict:
     """
     Возвращает отформатированные данные о зарплате
     """
-    if vacancy['salary'] == None:
+    if vacancy['salary'] is None:
         vacancy['salary'] = {
             'from': 0,
             'to': 0
         }
-    elif vacancy['salary']['from'] == None:
+    elif vacancy['salary']['from'] is None:
         vacancy['salary']['from'] = vacancy['salary']['to']
-    elif vacancy['salary']['to'] == None:
+    elif vacancy['salary']['to'] is None:
         vacancy['salary']['to'] = vacancy['salary']['from']
     return vacancy
