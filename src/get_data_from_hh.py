@@ -1,4 +1,5 @@
 import requests
+from config import COUNT_OF_VACANCIES_IN_PAGE
 
 
 def get_company(keyword: str) -> dict:
@@ -9,6 +10,7 @@ def get_company(keyword: str) -> dict:
         'text': keyword  # Текст фильтра. Должно быть название компании
     }
     responce = requests.get('https://api.hh.ru/employers', params=params)
+    responce.raise_for_status()
     company = responce.json()
     return company
 
@@ -18,9 +20,10 @@ def get_vacancies_from_company(company: dict) -> list:
     Возвращает список вакансий компании
     """
     params = {
-        'per_page': 100
+        'per_page': COUNT_OF_VACANCIES_IN_PAGE
     }
     responce = requests.get(company['items'][0]['vacancies_url'], params=params)
+    responce.raise_for_status()
     vacancies = responce.json()['items']
     return vacancies
 
@@ -30,6 +33,7 @@ def get_company_data(company: dict) -> dict:
     Возвращает данные о работодателе
     """
     responce = requests.get(company['items'][0]['url'])
+    responce.raise_for_status()
     company_data = responce.json()
     return company_data
 
