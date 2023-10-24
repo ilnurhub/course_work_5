@@ -1,7 +1,7 @@
-from get_data_from_hh import get_company, get_company_data, get_vacancies_from_company, format_salary_data
+from src.get_data_from_hh import get_company, get_company_data, get_vacancies_from_company, format_salary_data
 from config import config, COMPANIES, MENU, DATABASE_NAME
-from create_fill_db import create_database, save_data_to_database
-from dbmanager import DBManager
+from src.create_fill_db import create_database, save_data_to_database
+from src.dbmanager import DBManager
 
 
 def main():
