@@ -3,7 +3,8 @@ from config import config, COMPANIES, MENU, DATABASE_NAME
 from create_fill_db import create_database, save_data_to_database
 from dbmanager import DBManager
 
-if __name__ == '__main__':
+
+def main():
     params = config()
     create_database(DATABASE_NAME, params)
     for company_name in COMPANIES:
@@ -39,3 +40,7 @@ if __name__ == '__main__':
         else:
             print('Неверный ввод')
             choose = input(MENU)
+
+
+if __name__ == '__main__':
+    main()
