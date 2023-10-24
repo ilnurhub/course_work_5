@@ -1,4 +1,5 @@
 import requests
+from config import COUNT_OF_VACANCIES_IN_PAGE
 
 
 def get_company(keyword: str) -> dict:
@@ -18,7 +19,7 @@ def get_vacancies_from_company(company: dict) -> list:
     Возвращает список вакансий компании
     """
     params = {
-        'per_page': 100
+        'per_page': COUNT_OF_VACANCIES_IN_PAGE
     }
     responce = requests.get(company['items'][0]['vacancies_url'], params=params)
     vacancies = responce.json()['items']
