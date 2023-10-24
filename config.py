@@ -35,3 +35,5 @@ MENU = f"""
 Выберите цифру: """
 
 DATABASE_NAME = 'hh_vacancies'
+
+COUNT_OF_VACANCIES_IN_PAGE = 100
